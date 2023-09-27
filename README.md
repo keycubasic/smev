@@ -1,6 +1,6 @@
 # smev
 
-Service for checking current information about Russian passports in the system of interdepartmental electronic interaction (SMEV)
+Cxf client for checking current information about Russian passports in the system of interdepartmental electronic interaction (SMEV)
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
