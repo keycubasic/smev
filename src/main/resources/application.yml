@@ -1,0 +1,69 @@
+quarkus:
+  swagger-ui:
+    always-include: true
+    path: /smev/swagger-ui
+    urls-primary-name: /smev/openapi
+  smallrye-openapi:
+    path: /smev/openapi
+
+  http:
+    non-application-root-path: /
+  
+  cxf:
+    codegen:
+      wsdl2java:
+        includes: wsdl/ExpiredPassports.wsdl
+        additional-params: -autoNameResolution,-wsdlLocation,wsdl/ExpiredPassports.wsdl,-xjc-Xts,-xjc-Xjavadoc
+        enabled: false
+
+    client:
+      smev:
+        wsdl: ${cxf.smev.baseUri}/gateway/services/SID0003110/1.00?wsdl
+        client-endpoint-url: ${cxf.smev.baseUri}/gateway/services/SID0003110/1.00
+        service-interface: ru.fms.sx.kernel.webservices.incomingrequests.v2_4_3.IncomingRequestsServiceV243
+        out-interceptors: org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor
+
+cxf:
+  smev:
+    baseUri: http://smev-mvf.test.gosuslugi.ru:7777
+    message:
+      sender:
+        code: FMS001001
+        name: ФМС России
+      recipient:
+        code: FMS001001
+        name: ФМС России
+      originator:
+        code: FMS001001
+        name: ФМС России
+      exchangeType: 3
+      serviceCode: 10000000611
+      caseNumber: d67aFqi8
+      testMsg: FMS control example
+    messageData:
+      appData:
+        user:
+          organization: 10000001022
+          person:
+            id: 4713967
+            firstName: Тест
+            secondName: Тестович
+            lastName: Тестов
+        serviceCode: P001
+        versionCode: 001
+        parameters:
+          series: DOC_SERIE
+          number: DOC_NUMBER
+          date: DOC_ISSUEDATE
+        dictionaryCode: DOC_STATUS
+
+wss:
+  username: alias
+  password: changeit
+
+"%dev":
+  quarkus:
+    # log:
+       # level: ALL
+    tls:
+      trust-all: true
